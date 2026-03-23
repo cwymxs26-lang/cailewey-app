@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cailewey - Login</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: rgba(0,0,0,0.7);
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    color: white;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login {
+    background: orange;
+    color: white;
+}
+
+.register {
+    background: green;
+    color: white;
+}
+
+.link {
+    font-size: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.link:hover {
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Iniciar Sesión</h2>
+
+    <input type="email" id="email" placeholder="Correo Electrónico">
+    <input type="password" id="password" placeholder="Contraseña">
+
+    <button class="btn login" onclick="login()">Ingresar</button>
+
+    <div class="link" onclick="forgotPassword()">
+        ¿Olvidaste tu contraseña?
+    </div>
+
+    <hr>
+
+    <button class="btn register" onclick="register()">
+        Crear Cuenta
+    </button>
+
+</div>
+
+<script>
+
+const URL = "https://script.google.com/macros/s/AKfycbzUgG91acmGZABfAoEFJMZc1HGhXolPcWcNKsj2EodZfOQc9_YnZGtOjdspvQ4mZb2E_g/exec";
+
+// 🔐 LOGIN
+function login() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+
+    fetch(URL, {
+        method: "POST",
+        body: JSON.stringify({
+            action: "login",
+            email: email,
+            password: password
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === "ok"){
+            alert("Bienvenido 🔥");
+        } else {
+            alert("Correo o contraseña incorrectos");
+        }
+    });
+}
+
+// 👤 REGISTRO SIMPLE
+function register(){
+    let name = prompt("Nombre:");
+    let email = prompt("Correo:");
+    let password = prompt("Contraseña:");
+    let phone = prompt("Teléfono:");
+
+    fetch(URL, {
+        method: "POST",
+        body: JSON.stringify({
+            action: "register",
+            name: name,
+            email: email,
+            password: password,
+            phone: phone
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.status === "ok"){
+            alert("Cuenta creada 🔥");
+        }
+    });
+}
+
+// 🔑 RECUPERAR CONTRASEÑA
+function forgotPassword(){
+    let email = prompt("Ingresa tu correo:");
+
+    fetch(URL, {
+        method: "POST",
+        body: JSON.stringify({
+            action: "forgot",
+            email: email
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+    });
+}
+
+</script>
+
+</body>
+</html>
