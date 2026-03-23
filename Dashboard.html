@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Cailewey</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #1a1f2c, #0b0f16);
+  color: white;
+}
+.header {
+  text-align: center;
+  padding: 20px;
+}
+.header h1 {
+  color: #ff7a00;
+  margin: 0;
+  font-size: 28px;
+}
+.sub {
+  opacity: 0.7;
+}
+.card {
+  margin: 15px;
+  padding: 15px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+.service {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.08);
+  transition: 0.3s;
+  cursor: pointer;
+}
+.service:hover {
+  transform: scale(1.03);
+  background: rgba(255,255,255,0.15);
+}
+.price {
+  color: #ff7a00;
+  font-weight: bold;
+}
+.btn {
+  margin: 20px;
+  padding: 18px;
+  text-align: center;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #ff7a00, #ff3c00);
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(255, 100, 0, 0.4);
+  transition: 0.3s;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Cailewey</h1>
+  <div class="sub">Dashboard de Usuario</div>
+</div>
+
+<div class="card">
+  <div>Nombre: <span id="nombreCliente"></span></div>
+  <div>ID Cliente: <span id="idCliente"></span></div>
+  <div>Modelo: <span id="modeloCliente"></span></div>
+  <div>Año: <span id="anioCliente"></span></div>
+  <div>Marca: <span id="marcaCliente"></span></div>
+  <div>Teléfono: <span id="telefonoCliente"></span></div>
+</div>
+
+<div class="card" id="productosContainer">
+  <h3>Productos Disponibles</h3>
+</div>
+
+<div class="btn" onclick="solicitarServicio('Solicitud general')">
+  🚨 Solicitar servicio
+</div>
+
+<script>
+const APPS_SCRIPT_URL = "TU_URL_DE_APPSCRIPT"; // Pon aquí tu URL de Apps Script
+
+// Recupera usuario guardado desde login (localStorage)
+const userData = JSON.parse(localStorage.getItem("userData")) || {};
+
+// Muestra info en dashboard
+document.getElementById("nombreCliente").textContent = userData.nombre || "";
+document.getElementById("idCliente").textContent = userData.id || "";
+document.getElementById("modeloCliente").textContent = userData.modelo || "";
+document.getElementById("anioCliente").textContent = userData.anio || "";
+document.getElementById("marcaCliente").textContent = userData.marca || "";
+document.getElementById("telefonoCliente").textContent = userData.telefono || "";
+
+// Mostrar productos dinámicamente
+const productos = userData.productos || [
+  { nombre: "Gasolina", precio: "$100" },
+  { nombre: "Paso de corriente", precio: "$90" },
+  { nombre: "Cambio de llanta", precio: "$100" },
+  { nombre: "Aceite", precio: "$120" },
+  { nombre: "Diagnóstico", precio: "$80" }
+];
+
+const productosContainer = document.getElementById("productosContainer");
+productos.forEach(p => {
+  const div = document.createElement("div");
+  div.className = "service";
+  div.innerHTML = `<span>${p.nombre}</span><span class="price">${p.precio}</span>`;
+  div.onclick = () => solicitarServicio(p.nombre);
+  productosContainer.appendChild(div);
+});
+
+// Función para enviar solicitud al Apps Script
+function solicitarServicio(servicio) {
+  if(!userData.id) return alert("Usuario no identificado");
+
+  const data = {
+    id: userData.id,
+    nombre: userData.nombre,
+    telefono: userData.telefono,
+    servicio: servicio
+  };
+
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.text())
+  .then(res => {
+    alert("Solicitud enviada 🚀");
+    console.log(res);
+  })
+  .catch(err => console.error(err));
+}
+</script>
+
+</body>
+</html>
