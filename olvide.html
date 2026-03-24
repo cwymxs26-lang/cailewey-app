@@ -3,33 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recuperar</title>
+    <title>Recuperar - Cailewey</title>
     <style>
         body { background-color: #1a2a33; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .card { background-color: #0d1117; padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
-        h1 { color: white; margin-bottom: 20px; font-size: 24px; }
-        p { color: #ccc; font-size: 14px; margin-bottom: 25px; line-height: 1.5; }
+        h1 { color: white; font-size: 22px; margin-bottom: 20px; }
+        p { color: #ccc; font-size: 14px; margin-bottom: 25px; }
         input { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 10px; border: none; font-size: 16px; box-sizing: border-box; }
         .btn-recuperar { width: 100%; padding: 15px; background-color: #ff9f00; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .volver { color: #ccc; text-decoration: none; display: block; margin-top: 20px; font-size: 14px; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>¿Olvidaste tu clave?</h1>
-        <p>Ingresa tu número y te contactaremos por WhatsApp para enviarte tu contraseña.</p>
-        <input type="tel" id="recoveryPhone" placeholder="Tu número de teléfono" required>
-        <button onclick="enviarWhatsApp()" class="btn-recuperar">Pedir Contraseña</button>
-        <a href="index.html" class="volver">Regresar al inicio</a>
+        <h1>Recuperar Clave</h1>
+        <p>Escribe tu número y te contactaremos por WhatsApp.</p>
+        <input type="tel" id="recoveryPhone" placeholder="Tu número">
+        <button onclick="enviarWhatsApp()" class="btn-recuperar">Pedir Ayuda</button>
+        <br><br>
+        <a href="index.html" style="color:#ccc; text-decoration:none;">Volver</a>
     </div>
-
     <script>
         function enviarWhatsApp() {
             const tel = document.getElementById('recoveryPhone').value;
-            if (!tel) { alert("Ingresa tu número."); return; }
-            const MI_TEL = "523319053634"; 
-            const msg = `Hola! Soy cliente de Los Compadres. Olvidé mi clave. Mi número registrado es: ${tel}`;
-            window.open(`https://wa.me/${MI_TEL}?text=${encodeURIComponent(msg)}`, '_blank');
+            const msg = `Hola Cailewey! Olvidé mi clave. Mi número es: ${tel}`;
+            window.open(`https://wa.me/523319053634?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
 </body>
