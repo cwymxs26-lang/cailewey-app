@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Los Compadres</title>
+    <style>
+        body { background-color: #1a2a33; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; color: white; }
+        .card { background-color: #0d1117; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; border: 1px solid #333; }
+        .avatar { width: 80px; height: 80px; background-color: #ff9f00; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 30px; font-weight: bold; }
+        h1 { font-size: 22px; margin-bottom: 5px; }
+        .id-badge { background-color: #1f2937; color: #ff9f00; padding: 5px 15px; border-radius: 20px; font-size: 14px; display: inline-block; margin-bottom: 25px; border: 1px solid #ff9f00; }
+        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .menu-item { background: #1f2937; padding: 15px; border-radius: 12px; text-decoration: none; color: white; font-size: 14px; transition: 0.3s; border: 1px solid transparent; }
+        .menu-item:hover { border-color: #25d366; background: #263238; }
+        .btn-whatsapp { width: 100%; padding: 15px; background-color: #25d366; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 25px; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
+        .logout { color: #ff4444; text-decoration: none; display: block; margin-top: 25px; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="avatar" id="inicial">U</div>
+        <h1 id="saludo">¡Bienvenido!</h1>
+        <div class="id-badge" id="displayID">Cargando ID...</div>
 
+        <div class="menu-grid">
+            <a href="#" class="menu-item">📅 Mis Eventos</a>
+            <a href="#" class="menu-item">💰 Pagos</a>
+            <a href="#" class="menu-item">🎵 Repertorio</a>
+            <a href="#" class="menu-item">📄 Contratos</a>
+        </div>
+
+        <a href="https://wa.me/523319053634?text=Hola%2C%20necesito%20asistencia%20con%20mi%20evento" target="_blank" class="btn-whatsapp">
+            Soporte WhatsApp
+        </a>
+
+        <a href="index.html" onclick="logout()" class="logout">Cerrar Sesión</a>
+    </div>
+
+    <script>
+        // Al cargar la página, verificamos si hay sesión
+        window.onload = function() {
+            const nombre = localStorage.getItem('usuarioNombre');
+            const id = localStorage.getItem('usuarioID');
+
+            if (!nombre) {
+                window.location.href = 'index.html'; // Si no hay datos, regresa al login
+            } else {
+                document.getElementById('saludo').innerText = '¡Hola, ' + nombre.split(' ')[0] + '!';
+                document.getElementById('displayID').innerText = 'ID: ' + id;
+                document.getElementById('inicial').innerText = nombre.charAt(0).toUpperCase();
+            }
+        };
+
+        function logout() {
+            localStorage.clear();
+        }
+    </script>
+</body>
+</html>
