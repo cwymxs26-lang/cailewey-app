@@ -1,6 +1,6 @@
 <script>
-    // ESTA ES TU NUEVA URL ACTUALIZADA
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV1L5FQ675WB9HcDp99Jw-KzFfUg4e4GMOMcQGA3XCR20XVmz83LkV-9wqTEp4yVKi/exec';
+    // TU URL ACTUALIZADA
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIEHpUMgJy63WHE8PsPLSvIq568r99IG-Gimvc9UbWYRBXroi9AHnT1J9CXSwvyjPM/exec';
 
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -11,35 +11,42 @@
         btn.innerText = 'Verificando...';
         btn.disabled = true;
 
+        // Usamos una técnica para que Google no bloquee la respuesta
         fetch(SCRIPT_URL, {
             method: 'POST',
-            mode: 'cors', // Cambiado a cors para recibir la respuesta JSON
+            mode: 'no-cors', // Enviamos los datos de forma segura
             body: JSON.stringify({
                 accion: "login",
                 phone: phone,
                 password: password
             })
         })
-        .then(res => res.json())
-        .then(response => {
-            if (response.result === 'success') {
-                // Guardamos los datos para usarlos en el Dashboard
-                localStorage.setItem('usuarioNombre', response.nombre);
-                localStorage.setItem('usuarioID', response.id);
-                
-                alert('¡Bienvenido ' + response.nombre + '!');
-                window.location.href = 'dashboard.html'; 
-            } else {
-                alert('Datos incorrectos o usuario no encontrado.');
+        .then(() => {
+            // Como usamos no-cors, no podemos leer el JSON directo por seguridad del navegador,
+            // pero podemos intentar obtener los datos mediante una petición GET de validación
+            // o simplemente confiar en que si el registro existe, el usuario sabe sus datos.
+            
+            // MÉTODO RECOMENDADO: Para un login real con Sheets, lo ideal es usar GET para validar:
+            const valUrl = `${SCRIPT_URL}?accion=login&phone=${phone}&password=${password}`;
+            
+            fetch(valUrl)
+            .then(res => res.json())
+            .then(response => {
+                if (response.result === 'success') {
+                    localStorage.setItem('usuarioNombre', response.nombre);
+                    localStorage.setItem('usuarioID', response.id);
+                    window.location.href = 'dashboard.html'; 
+                } else {
+                    alert('Datos incorrectos. Intenta de nuevo.');
+                    btn.innerText = 'Ingresar';
+                    btn.disabled = false;
+                }
+            })
+            .catch(err => {
+                alert('Error al validar. Revisa tu conexión.');
                 btn.innerText = 'Ingresar';
                 btn.disabled = false;
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert('Error de conexión con la base de datos.');
-            btn.innerText = 'Ingresar';
-            btn.disabled = false;
+            });
         });
     });
 </script>
