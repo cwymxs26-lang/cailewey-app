@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Cuenta</title>
+    <title>Cailewey - Registro</title>
     <style>
         body { background-color: #1a2a33; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background-color: #0d1117; padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
-        h1 { color: white; margin-bottom: 20px; font-size: 28px; }
+        .card { background-color: #0d1117; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+        h1 { color: white; font-size: 24px; margin-bottom: 20px; }
         input { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 10px; border: none; font-size: 16px; box-sizing: border-box; }
         .btn-registro { width: 100%; padding: 15px; background-color: #008000; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
         .volver { color: #ccc; text-decoration: none; display: block; margin-top: 15px; font-size: 14px; }
@@ -18,20 +18,19 @@
         <h1>Nueva Cuenta</h1>
         <form id="registroForm">
             <input type="text" id="nombre" placeholder="Nombre Completo" required>
-            <input type="tel" id="phone" placeholder="Teléfono (WhatsApp)" required>
-            <input type="password" id="password" placeholder="Crea tu contraseña" required>
+            <input type="tel" id="phone" placeholder="WhatsApp" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
             <button type="submit" class="btn-registro" id="btnEnviar">Registrarme</button>
         </form>
-        <a href="index.html" class="volver">Volver al inicio</a>
+        <a href="index.html" class="volver">Ya tengo cuenta</a>
     </div>
 
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlHpWRfefGG-j99brtNsh7l6PksIqNdRdtVRseZRPcWhuhsBwwcHM8WdWy_uU4SQwu/exec';
-
         document.getElementById('registroForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnviar');
-            btn.innerText = 'Procesando...';
+            btn.innerText = 'Guardando...';
             btn.disabled = true;
 
             const datos = {
@@ -44,16 +43,11 @@
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(datos)
             }).then(() => {
-                alert('¡Registro enviado con éxito!');
+                alert('¡Registro enviado! Ya puedes iniciar sesión.');
                 window.location.href = 'index.html';
-            }).catch(err => {
-                alert('Error al registrar.');
-                btn.disabled = false;
-                btn.innerText = 'Registrarme';
-            });
+            }).catch(() => { alert('Error al registrar.'); btn.disabled = false; });
         });
     </script>
 </body>
