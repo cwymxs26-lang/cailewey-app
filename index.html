@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Los Compadres</title>
+    <title>Cailewey - Iniciar Sesión</title>
     <style>
         body { background-color: #1a2a33; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .card { background-color: #0d1117; padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #1f2937; }
-        h1 { color: white; margin-bottom: 30px; font-size: 28px; }
-        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #333; font-size: 16px; box-sizing: border-box; background: #fff; color: #000; }
-        .btn-ingresar { width: 100%; padding: 15px; background-color: #ff9f00; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .logo { width: 120px; margin-bottom: 20px; border-radius: 50%; }
+        h1 { color: white; margin-bottom: 30px; font-size: 24px; }
+        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: none; font-size: 16px; box-sizing: border-box; }
+        .btn-ingresar { width: 100%; padding: 15px; background-color: #ff9f00; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
         .btn-crear { width: 100%; padding: 15px; background-color: #008000; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; text-decoration: none; display: block; }
         .olvide { color: #ccc; text-decoration: none; font-size: 14px; display: block; margin: 15px 0; }
         hr { border: 0; border-top: 1px solid #444; margin: 20px 0; }
@@ -17,9 +18,10 @@
 </head>
 <body>
     <div class="card">
+        <img src="logo.png" class="logo" alt="Cailewey">
         <h1>Iniciar Sesión</h1>
         <form id="loginForm">
-            <input type="tel" id="phone" placeholder="Número de Teléfono" required>
+            <input type="tel" id="phone" placeholder="Teléfono" required>
             <input type="password" id="password" placeholder="Contraseña" required>
             <button type="submit" class="btn-ingresar">Ingresar</button>
         </form>
@@ -30,13 +32,11 @@
 
     <script>
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlHpWRfefGG-j99brtNsh7l6PksIqNdRdtVRseZRPcWhuhsBwwcHM8WdWy_uU4SQwu/exec';
-
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             const btn = e.target.querySelector('button');
-
             btn.innerText = 'Verificando...';
             btn.disabled = true;
 
@@ -48,16 +48,12 @@
                     localStorage.setItem('usuarioID', response.id);
                     window.location.href = 'dashboard.html'; 
                 } else {
-                    alert('Datos incorrectos. Intenta de nuevo.');
+                    alert('Datos incorrectos.');
                     btn.innerText = 'Ingresar';
                     btn.disabled = false;
                 }
             })
-            .catch(err => {
-                alert('Error de conexión. Intenta de nuevo.');
-                btn.innerText = 'Ingresar';
-                btn.disabled = false;
-            });
+            .catch(err => { alert('Error de conexión.'); btn.disabled = false; });
         });
     </script>
 </body>
