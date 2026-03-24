@@ -27,7 +27,6 @@
         function enviarWhatsApp() {
             const tel = document.getElementById('recoveryPhone').value;
             if (!tel) { alert("Ingresa tu número."); return; }
-            
             const MI_TEL = "523319053634"; 
             const msg = `Hola! Soy cliente de Los Compadres. Olvidé mi clave. Mi número registrado es: ${tel}`;
             window.open(`https://wa.me/${MI_TEL}?text=${encodeURIComponent(msg)}`, '_blank');
