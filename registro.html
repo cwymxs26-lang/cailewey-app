@@ -1,1 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <style>
+        body { background-color: #1a2a33; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background-color: #0d1117; padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
+        h1 { color: white; margin-bottom: 20px; font-size: 28px; }
+        input { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 10px; border: none; font-size: 16px; box-sizing: border-box; }
+        .btn-registro { width: 100%; padding: 15px; background-color: #008000; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .volver { color: #ccc; text-decoration: none; display: block; margin-top: 15px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Nueva Cuenta</h1>
+        <form id="registroForm">
+            <input type="text" id="nombre" placeholder="Nombre Completo" required>
+            <input type="tel" id="phone" placeholder="Teléfono (WhatsApp)" required>
+            <input type="password" id="password" placeholder="Crea tu contraseña" required>
+            <button type="submit" class="btn-registro" id="btnEnviar">Registrarme</button>
+        </form>
+        <a href="index.html" class="volver">Volver al inicio</a>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3O6W7yWHS0FOmlCdxbkdvh315CNYibeQ2Nyx3Pb8NlKRZwHKawxO7hXc_p6LrFp7A/exec';
+
+        document.getElementById('registroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnEnviar');
+            btn.innerText = 'Procesando...';
+            btn.disabled = true;
+
+            const datos = {
+                nombre: document.getElementById('nombre').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Importante para Apps Script
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datos)
+            }).then(() => {
+                alert('¡Registro solicitado! Tu cuenta se está creando en la base de datos de Los Compadres.');
+                window.location.href = 'index.html';
+            }).catch(err => {
+                alert('Error al conectar con la base de datos.');
+                btn.disabled = false;
+                btn.innerText = 'Registrarme';
+            });
+        });
+    </script>
+</body>
+</html>
 
