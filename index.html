@@ -1,35 +1,46 @@
-<script>
-    // TU URL ACTUALIZADA
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIEHpUMgJy63WHE8PsPLSvIq568r99IG-Gimvc9UbWYRBXroi9AHnT1J9CXSwvyjPM/exec';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Los Compadres</title>
+    <style>
+        body { background-color: #1a2a33; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background-color: #0d1117; padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #1f2937; }
+        h1 { color: white; margin-bottom: 30px; font-size: 28px; }
+        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: 1px solid #333; font-size: 16px; box-sizing: border-box; background: #fff; color: #000; }
+        .btn-ingresar { width: 100%; padding: 15px; background-color: #ff9f00; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-crear { width: 100%; padding: 15px; background-color: #008000; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; text-decoration: none; display: block; }
+        .olvide { color: #ccc; text-decoration: none; font-size: 14px; display: block; margin: 15px 0; }
+        hr { border: 0; border-top: 1px solid #444; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Iniciar Sesión</h1>
+        <form id="loginForm">
+            <input type="tel" id="phone" placeholder="Número de Teléfono" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit" class="btn-ingresar">Ingresar</button>
+        </form>
+        <a href="olvide.html" class="olvide">¿Olvidaste tu contraseña?</a>
+        <hr>
+        <a href="registro.html" class="btn-crear">Crear Cuenta</a>
+    </div>
 
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const phone = document.getElementById('phone').value;
-        const password = document.getElementById('password').value;
-        const btn = e.target.querySelector('button');
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlHpWRfefGG-j99brtNsh7l6PksIqNdRdtVRseZRPcWhuhsBwwcHM8WdWy_uU4SQwu/exec';
 
-        btn.innerText = 'Verificando...';
-        btn.disabled = true;
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const btn = e.target.querySelector('button');
 
-        // Usamos una técnica para que Google no bloquee la respuesta
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Enviamos los datos de forma segura
-            body: JSON.stringify({
-                accion: "login",
-                phone: phone,
-                password: password
-            })
-        })
-        .then(() => {
-            // Como usamos no-cors, no podemos leer el JSON directo por seguridad del navegador,
-            // pero podemos intentar obtener los datos mediante una petición GET de validación
-            // o simplemente confiar en que si el registro existe, el usuario sabe sus datos.
-            
-            // MÉTODO RECOMENDADO: Para un login real con Sheets, lo ideal es usar GET para validar:
-            const valUrl = `${SCRIPT_URL}?accion=login&phone=${phone}&password=${password}`;
-            
-            fetch(valUrl)
+            btn.innerText = 'Verificando...';
+            btn.disabled = true;
+
+            fetch(`${SCRIPT_URL}?accion=login&phone=${phone}&password=${password}`)
             .then(res => res.json())
             .then(response => {
                 if (response.result === 'success') {
@@ -43,10 +54,11 @@
                 }
             })
             .catch(err => {
-                alert('Error al validar. Revisa tu conexión.');
+                alert('Error de conexión. Intenta de nuevo.');
                 btn.innerText = 'Ingresar';
                 btn.disabled = false;
             });
         });
-    });
-</script>
+    </script>
+</body>
+</html>
