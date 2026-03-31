@@ -3,33 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cailewey - Auxilio Vial Moto</title>
+    <title>Cailewey - Auxilio Vial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #121212; color: #e0e0e0; font-family: sans-serif; }
-        .card { background-color: #1e1e1e; border: 1px solid #333; border-radius: 15px; margin-bottom: 12px; }
+        body { background-color: #121212; color: #e0e0e0; font-family: sans-serif; padding-bottom: 50px; }
+        .card { background-color: #1e1e1e; border: 1px solid #333; border-radius: 15px; margin-bottom: 15px; }
         .card-header { background-color: #252525; color: #ffc107; font-weight: bold; border-bottom: 1px solid #333; border-radius: 15px 15px 0 0 !important; }
-        .btn-primary { background-color: #ffc107; border: none; color: black; font-weight: bold; }
-        .btn-quantity { width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ffc107; background: transparent; color: #ffc107; font-size: 22px; }
-        .btn-help { background-color: #d9534f; color: white; font-weight: bold; border: none; padding: 18px; border-radius: 12px; width: 100%; font-size: 1.3rem; box-shadow: 0 5px 15px rgba(217, 83, 79, 0.4); }
+        .btn-qty { width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ffc107; background: transparent; color: #ffc107; font-size: 20px; transition: 0.2s; }
+        .btn-qty:active { background: #ffc107; color: black; }
+        .btn-help { background: linear-gradient(145deg, #d9534f, #c9302c); color: white; font-weight: bold; border: none; padding: 20px; border-radius: 15px; width: 100%; font-size: 1.4rem; box-shadow: 0 5px 15px rgba(217, 83, 79, 0.4); }
+        .form-select, .form-control { background-color: #2d2d2d; border: 1px solid #444; color: white; }
+        .form-select:focus { border-color: #ffc107; box-shadow: none; }
         .hidden { display: none; }
-        .form-control { background-color: #2d2d2d; border: 1px solid #444; color: white; }
-        .form-control:focus { background-color: #333; color: white; border-color: #ffc107; box-shadow: none; }
+        .badge-qty { font-size: 1.3rem; padding: 0 15px; min-width: 40px; text-align: center; }
         input[type=range] { accent-color: #ffc107; }
-        .badge-qty { font-size: 1.4rem; padding: 0 15px; color: #fff; }
     </style>
 </head>
 <body>
 
 <div class="container py-4">
-    
+    <h2 class="text-center mb-4" style="color: #ffc107;">CAILEWEY 🛠️</h2>
+
     <div id="section-login" class="row justify-content-center">
         <div class="col-md-5">
             <div class="card p-4 text-center">
-                <h2 class="mb-4" style="color: #ffc107;">CAILEWEY</h2>
+                <h4 class="mb-4">Iniciar Sesión</h4>
                 <input type="text" class="form-control mb-3" placeholder="Usuario">
                 <input type="password" class="form-control mb-3" placeholder="Contraseña">
-                <button class="btn btn-primary w-100 mb-3" onclick="showSection('section-products')">ENTRAR</button>
+                <button class="btn btn-primary w-100 mb-3" style="background-color: #ffc107; color: black; border: none; font-weight: bold;" onclick="showSection('section-main')">ENTRAR</button>
                 <div class="small">
                     <a href="#" class="text-warning text-decoration-none" onclick="showSection('section-register')">Crear Cuenta</a> | 
                     <a href="#" class="text-warning text-decoration-none" onclick="showSection('section-forgot')">Olvidé Contraseña</a>
@@ -47,10 +48,8 @@
                 <input type="text" class="form-control mb-2" placeholder="Marca de Moto">
                 <input type="text" class="form-control mb-2" placeholder="Modelo">
                 <input type="number" class="form-control mb-3" placeholder="Año">
-                <button class="btn btn-primary w-100 mb-3" onclick="showSection('section-login')">Registrar</button>
-                <div class="text-center small">
-                    <a href="#" class="text-warning text-decoration-none" onclick="showSection('section-login')">Ya tengo cuenta</a>
-                </div>
+                <button class="btn btn-primary w-100 mb-3" style="background-color: #ffc107; color: black; border: none; font-weight: bold;" onclick="showSection('section-login')">REGISTRAR</button>
+                <center><a href="#" class="text-warning text-decoration-none" onclick="showSection('section-login')">Tengo cuenta</a></center>
             </div>
         </div>
     </div>
@@ -59,134 +58,148 @@
         <div class="col-md-5 text-center">
             <div class="card p-4">
                 <h3>Recuperar Clave</h3>
-                <p class="text-secondary small">Ingresa tu número y pídela por WhatsApp.</p>
                 <input type="tel" id="forgot-phone" class="form-control mb-3" placeholder="Tu celular">
-                <button class="btn btn-primary w-100" onclick="solicitarPassWhatsApp()">Pedir Contraseña</button>
+                <button class="btn btn-primary w-100" style="background-color: #ffc107; color: black; border: none; font-weight: bold;" onclick="pedirPassWA()">Pedir por WhatsApp</button>
                 <button class="btn btn-link text-warning mt-2" onclick="showSection('section-login')">Volver</button>
             </div>
         </div>
     </div>
 
-    <div id="section-products" class="hidden">
-        <h3 class="text-center mb-4" style="color: #ffc107;">¿Qué necesitas?</h3>
-        
+    <div id="section-main" class="hidden">
         <div class="card">
-            <div class="card-header">GASOLINA</div>
+            <div class="card-header">⛽ GASOLINA</div>
             <div class="card-body d-flex justify-content-between align-items-center">
-                <span>Seleccionar Litros:</span>
+                <span>Cantidad (Litros):</span>
                 <div class="d-flex align-items-center">
-                    <button class="btn-quantity" onclick="changeQty('gas', -1)">-</button>
-                    <span id="qty-gas" class="badge-qty">1</span>
-                    <button class="btn-quantity" onclick="changeQty('gas', 1)">+</button>
+                    <button class="btn-qty" onclick="updateVal('gas', -1)">-</button>
+                    <span id="qty-gas" class="badge-qty">0</span>
+                    <button class="btn-qty" onclick="updateVal('gas', 1)">+</button>
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">ACEITE</div>
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <span>Seleccionar Litros:</span>
-                <div class="d-flex align-items-center">
-                    <button class="btn-quantity" onclick="changeQty('oil', -1)">-</button>
-                    <span id="qty-oil" class="badge-qty">1</span>
-                    <button class="btn-quantity" onclick="changeQty('oil', 1)">+</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">PONCHADURA</div>
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <span>¿Necesitas parches?</span>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="check-patch" style="transform: scale(1.6);">
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">ACCESORIOS BÁSICOS</div>
+            <div class="card-header">🛢️ ACEITE</div>
             <div class="card-body">
-                <input type="range" class="form-range" min="0" max="4" step="1" id="acc-slider" value="0" oninput="updateAcc(this.value)">
-                <div class="d-flex justify-content-between small text-secondary mt-1">
-                    <span>Ninguno</span><span>Bujía</span><span>Cadena</span><span>Cámara</span><span>Espejo</span>
-                </div>
-                <div class="text-center mt-3">
-                    <span class="badge bg-warning text-dark p-2" id="label-acc">Seleccionado: Ninguno</span>
+                <select class="form-select mb-3" id="oil-type">
+                    <option value="4 Tiempos">Aceite 4 Tiempos</option>
+                    <option value="2 Tiempos">Aceite 2 Tiempos</option>
+                </select>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span>Cantidad (Litros):</span>
+                    <div class="d-flex align-items-center">
+                        <button class="btn-qty" onclick="updateVal('oil', -1)">-</button>
+                        <span id="qty-oil" class="badge-qty">0</span>
+                        <button class="btn-qty" onclick="updateVal('oil', 1)">+</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-4">
-            <button class="btn-help" onclick="enviarPedidoCompleto()">🚀 PEDIR AYUDA AHORA</button>
-            <p class="text-center mt-3 text-secondary small">Se enviará ubicación GPS al 3319053634</p>
+        <div class="card">
+            <div class="card-header">🔧 REPARACIÓN Y TRASLADO</div>
+            <div class="card-body">
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="check-patch">
+                    <label>Parche por ponchadura</label>
+                </div>
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="check-tire">
+                    <label>Cambio de Llanta</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="check-tow">
+                    <label>Servicio de Remolque</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">📦 ACCESORIOS BÁSICOS</div>
+            <div class="card-body text-center">
+                <input type="range" class="form-range" min="0" max="5" step="1" id="acc-slider" value="0" oninput="updateAcc(this.value)">
+                <div class="d-flex justify-content-between small text-secondary">
+                    <span>Nada</span><span>Bujía</span><span>Cadena</span><span>Cámara</span><span>Espejo</span><span>Cable</span>
+                </div>
+                <div class="mt-3"><span class="badge bg-warning text-dark p-2" id="lbl-acc">Elegido: Ninguno</span></div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <button class="btn-help" onclick="enviarSolicitud()">🚀 PEDIR AYUDA AHORA</button>
+            <p class="text-center mt-3 text-secondary small">Aviso a: 3319053634</p>
         </div>
     </div>
-
 </div>
 
 <script>
-    const MI_WHATSAPP = "523319053634";
-    const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbypwsQsCTIksJoqtaqzfg72RG23xsPbjRz_Q94pZ7STHO1zlZvaJKWu1_nmrZyHrH2Lqw/exec";
+    const MI_TEL = "523319053634";
+    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxMRuJEX0DKAEBCUZhZeWSEOEwYDeJSX447K1VEv_EhZalu9jf8Jfs1ZdRnUZwRglA-yw/exec";
     
-    let quantities = { gas: 1, oil: 1 };
-    const listaAccesorios = ["Ninguno", "Bujía", "Lubricante Cadena", "Cámara de Aire", "Espejo"];
-    let accElegido = listaAccesorios[0];
+    let vals = { gas: 0, oil: 0 };
+    const accesorios = ["Ninguno", "Bujía", "Cadena", "Cámara de aire", "Espejo", "Cable de acelerador/clutch"];
+    let accSelected = accesorios[0];
 
     function showSection(id) {
         document.querySelectorAll('.container > div').forEach(d => d.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
     }
 
-    function changeQty(type, val) {
-        quantities[type] = Math.max(1, Math.min(2, quantities[type] + val));
-        document.getElementById(`qty-${type}`).innerText = quantities[type];
+    function updateVal(type, n) {
+        vals[type] = Math.max(0, Math.min(2, vals[type] + n));
+        document.getElementById(`qty-${type}`).innerText = vals[type];
     }
 
-    function updateAcc(val) {
-        accElegido = listaAccesorios[val];
-        document.getElementById('label-acc').innerText = "Seleccionado: " + accElegido;
+    function updateAcc(v) {
+        accSelected = accesorios[v];
+        document.getElementById('lbl-acc').innerText = "Elegido: " + accSelected;
     }
 
-    function solicitarPassWhatsApp() {
+    function pedirPassWA() {
         const tel = document.getElementById('forgot-phone').value;
-        if(!tel) return alert("Escribe tu número");
-        window.open(`https://wa.me/${MI_WHATSAPP}?text=Hola, olvidé mi contraseña. Mi celular es: ${tel}`, '_blank');
+        if(!tel) return alert("Ingresa tu celular");
+        window.open(`https://wa.me/${MI_TEL}?text=Hola, olvidé mi contraseña. Mi celular es: ${tel}`, '_blank');
         showSection('section-login');
     }
 
-    function enviarPedidoCompleto() {
+    function enviarSolicitud() {
         if (!navigator.geolocation) return alert("GPS no disponible");
 
         navigator.geolocation.getCurrentPosition((pos) => {
             const lat = pos.coords.latitude;
             const lon = pos.coords.longitude;
-            const linkMapa = `https://www.google.com/maps?q=${lat},${lon}`;
+            const linkMaps = `https://www.google.com/maps?q=${lat},${lon}`;
             
-            const resumen = `¡AYUDA URGENTE!\n⛽ Gas: ${quantities.gas}L\n🛢️ Aceite: ${quantities.oil}L\n🔧 Parche: ${document.getElementById('check-patch').checked ? 'SÍ' : 'NO'}\n📦 Acc: ${accElegido}\n📍 Ubicación: ${linkMapa}`;
+            const pedido = {
+                gas: vals.gas + " L",
+                aceite: `${vals.oil} L (${document.getElementById('oil-type').value})`,
+                parche: document.getElementById('check-patch').checked ? "SÍ" : "NO",
+                llanta: document.getElementById('check-tire').checked ? "SÍ" : "NO",
+                remolque: document.getElementById('check-tow').checked ? "SÍ" : "NO",
+                accesorio: accSelected,
+                ubicacion: linkMaps
+            };
 
-            // 1. Enviar a Google Sheets
-            fetch(URL_SCRIPT, {
-                method: "POST",
-                mode: "no-cors",
-                body: JSON.stringify({
-                    gas: quantities.gas,
-                    aceite: quantities.oil,
-                    parche: document.getElementById('check-patch').checked,
-                    accesorio: accElegido,
-                    mapa: linkMapa,
-                    lat: lat,
-                    lon: lon
-                })
-            });
+            // Enviar a Google Sheets
+            fetch(URL_APPS_SCRIPT, { method: "POST", mode: "no-cors", body: JSON.stringify(pedido) });
 
-            // 2. Enviar a WhatsApp
-            window.open(`https://wa.me/${MI_WHATSAPP}?text=${encodeURIComponent(resumen)}`, '_blank');
-            alert("Solicitud procesada. Estamos en camino.");
+            // Enviar a WhatsApp
+            let msj = `*NUEVO PEDIDO CAILEWEY*\n`;
+            if(vals.gas > 0) msj += `⛽ Gasolina: ${pedido.gas}\n`;
+            if(vals.oil > 0) msj += `🛢️ Aceite: ${pedido.aceite}\n`;
+            if(pedido.parche === "SÍ") msj += `🔧 Parche: SÍ\n`;
+            if(pedido.llanta === "SÍ") msj += `🔘 Llanta: SÍ\n`;
+            if(pedido.remolque === "SÍ") msj += `🚜 Remolque: SÍ\n`;
+            if(accSelected !== "Ninguno") msj += `📦 Acc: ${accSelected}\n`;
+            msj += `\n📍 Ubicación:\n${linkMaps}`;
 
-        }, () => alert("Debes activar el GPS para pedir ayuda."));
+            window.open(`https://wa.me/${MI_TEL}?text=${encodeURIComponent(msj)}`, '_blank');
+            alert("¡Solicitud enviada! En breve te contactaremos.");
+
+        }, () => alert("Por favor activa el GPS para poder enviar tu ubicación."));
     }
 </script>
 
 </body>
 </html>
+
