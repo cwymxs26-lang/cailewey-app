@@ -3,58 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cailewey - Iniciar Sesión</title>
+    <title>Cailewey - Auxilio Vial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #1a2a33; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background-color: #0d1117; padding: 40px 20px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #1f2937; }
-        .logo { width: 120px; margin-bottom: 20px; border-radius: 50%; }
-        h1 { color: white; margin-bottom: 30px; font-size: 24px; }
-        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: none; font-size: 16px; box-sizing: border-box; }
-        .btn-ingresar { width: 100%; padding: 15px; background-color: #ff9f00; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .btn-crear { width: 100%; padding: 15px; background-color: #008000; color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; text-decoration: none; display: block; }
-        .olvide { color: #ccc; text-decoration: none; font-size: 14px; display: block; margin: 15px 0; }
-        hr { border: 0; border-top: 1px solid #444; margin: 20px 0; }
+        body { background-color: #1a1a1a; color: #ffffff; }
+        .card { background-color: #2d2d2d; border: none; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .form-control { background-color: #3d3d3d; border: 1px solid #4d4d4d; color: white; }
+        .form-control:focus { background-color: #4d4d4d; color: white; border-color: #ffc107; }
+        .hidden { display: none; }
+        .product-card { 
+            background: #3d3d3d; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            border: 2px solid transparent;
+        }
+        .product-card.selected { border-color: #ffc107; background: #4d4d4d; }
+        .btn-primary { background-color: #ffc107; border: none; color: black; font-weight: bold; }
+        .btn-primary:hover { background-color: #e0a800; color: black; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <img src="logo.png" class="logo" alt="Cailewey">
-        <h1>Iniciar Sesión</h1>
-        <form id="loginForm">
-            <input type="tel" id="phone" placeholder="Teléfono" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button type="submit" class="btn-ingresar">Ingresar</button>
-        </form>
-        <a href="olvide.html" class="olvide">¿Olvidaste tu contraseña?</a>
-        <hr>
-        <a href="registro.html" class="btn-crear">Crear Cuenta</a>
+
+<div class="container py-5">
+    <div id="section-login" class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card p-4 text-center">
+                <h2 class="mb-4">Cailewey</h2>
+                <input type="text" class="form-control mb-3" placeholder="Usuario">
+                <input type="password" class="form-control mb-3" placeholder="Contraseña">
+                <button class="btn btn-primary w-100 mb-3" onclick="showSection('section-products')">Entrar</button>
+                <div>
+                    <a href="#" class="text-warning" onclick="showSection('section-register')">Crear Cuenta</a> | 
+                    <a href="#" class="text-warning" onclick="showSection('section-forgot')">Olvidé Contraseña</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlHpWRfefGG-j99brtNsh7l6PksIqNdRdtVRseZRPcWhuhsBwwcHM8WdWy_uU4SQwu/exec';
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const phone = document.getElementById('phone').value;
-            const password = document.getElementById('password').value;
-            const btn = e.target.querySelector('button');
-            btn.innerText = 'Verificando...';
-            btn.disabled = true;
+    <div id="section-register" class="row justify-content-center hidden">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h3 class="text-center mb-4">Nuevo Registro</h3>
+                <input type="text" class="form-control mb-2" placeholder="Nombre completo">
+                <input type="tel" class="form-control mb-2" placeholder="Número de celular">
+                <input type="text" class="form-control mb-2" placeholder="Marca de moto">
+                <input type="text" class="form-control mb-2" placeholder="Modelo">
+                <input type="number" class="form-control mb-3" placeholder="Año">
+                <button class="btn btn-primary w-100 mb-3">Registrar</button>
+                <div class="text-center">
+                    <a href="#" class="text-warning" onclick="showSection('section-login')">Tengo cuenta</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            fetch(`${SCRIPT_URL}?accion=login&phone=${phone}&password=${password}`)
-            .then(res => res.json())
-            .then(response => {
-                if (response.result === 'success') {
-                    localStorage.setItem('usuarioNombre', response.nombre);
-                    localStorage.setItem('usuarioID', response.id);
-                    window.location.href = 'dashboard.html'; 
-                } else {
-                    alert('Datos incorrectos.');
-                    btn.innerText = 'Ingresar';
-                    btn.disabled = false;
-                }
-            })
-            .catch(err => { alert('Error de conexión.'); btn.disabled = false; });
-        });
-    </script>
+    <div id="section-forgot" class="row justify-content-center hidden">
+        <div class="col-md-5">
+            <div class="card p-4 text-center">
+                <h3>Recuperar Clave</h3>
+                <p class="text-secondary small">Ingresa tu celular y solicita tu clave por WhatsApp.</p>
+                <input type="tel" id="forgot-phone" class="form-control mb-3" placeholder="Tu número de celular">
+                <button class="btn btn-primary w-100" onclick="pedirClaveWhatsApp()">Pedir Contraseña</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="section-products" class="hidden">
+        <h3 class="text-center mb-4">Selecciona el servicio</h3>
+        <div class="row g-3">
+            <div class="col-6 col-md-4"><div class="card p-3 text-center product-card" onclick="selectItem(this, 'Gasolina')">Gasolina</div></div>
+            <div class="col-6 col-md-4"><div class="card p-3 text-center product-card" onclick="selectItem(this, 'Aceite')">Aceite</div></div>
+            <div class="col-6 col-md-4"><div class="card p-3 text-center product-card" onclick="selectItem(this, 'Parches')">Parches</div></div>
+            <div class="col-6 col-md-4"><div class="card p-3 text-center product-card" onclick="selectItem(this, 'Llantas')">Llantas</div></div>
+            <div class="col-6 col-md-4"><div class="card p-3 text-center product-card" onclick="selectItem(this, 'Remolque')">Remolque</div></div>
+            <div class="col-6 col-md-4"><div class="card p-3 text-center product-card" onclick="selectItem(this, 'Accesorios')">Accesorios</div></div>
+        </div>
+        <div class="mt-4 p-3 bg-dark rounded shadow">
+            <p>Servicio: <strong id="selected-item" class="text-warning">Ninguno</strong></p>
+            <button class="btn btn-danger btn-lg w-100 py-3" onclick="pedirAyuda()">PEDIR AYUDA</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const MI_TELEFONO = "523319053634"; // Tu número configurado
+    let itemSeleccionado = "";
+
+    function showSection(id) {
+        document.querySelectorAll('.container > div').forEach(div => div.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+    }
+
+    function selectItem(element, name) {
+        document.querySelectorAll('.product-card').forEach(c => c.classList.remove('selected'));
+        element.classList.add('selected');
+        itemSeleccionado = name;
+        document.getElementById('selected-item').innerText = name;
+    }
+
+    // Olvidé contraseña: Manda a WhatsApp y regresa al inicio
+    function pedirClaveWhatsApp() {
+        const telCliente = document.getElementById('forgot-phone').value;
+        if(!telCliente) return alert("Ingresa tu número");
+        
+        const mensaje = `Hola, olvidé mi contraseña de Cailewey. Mi celular es: ${telCliente}`;
+        window.open(`https://wa.me/${MI_TELEFONO}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        
+        showSection('section-login'); // Regresa a página principal
+    }
+
+    // Pedir Ayuda: Geolocalización + Envío a Google Sheets + WhatsApp
+    function pedirAyuda() {
+        if(!itemSeleccionado) return alert("Elige un producto");
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                const googleMapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+
+                // 1. Enviar a Google Sheets vía Apps Script
+                const WEB_APP_URL = "TU_URL_DE_APPS_SCRIPT"; 
+                fetch(WEB_APP_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify({
+                        servicio: itemSeleccionado,
+                        ubicacion: googleMapsLink,
+                        fecha: new Date().toLocaleString()
+                    })
+                });
+
+                // 2. Notificar por WhatsApp también para respuesta rápida
+                const mensajeWS = `¡AYUDA! Necesito ${itemSeleccionado}. Mi ubicación: ${googleMapsLink}`;
+                window.open(`https://wa.me/${MI_TELEFONO}?text=${encodeURIComponent(mensajeWS)}`, '_blank');
+
+                alert("Solicitud registrada. Te contactaremos pronto.");
+            }, () => {
+                alert("Por favor activa tu GPS para enviarte ayuda.");
+            });
+        }
+    }
+</script>
 </body>
 </html>
