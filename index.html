@@ -3,182 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cailewey - Auxilio Vial</title>
+    <title>Cailewey - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        body { background-color: #121212; color: #ffffff !important; font-family: sans-serif; padding-bottom: 50px; }
-        .card { background-color: #1e1e1e; border: 1px solid #444; border-radius: 15px; margin-bottom: 15px; }
-        .card-header { background-color: #252525; color: #ffc107 !important; font-weight: bold; border-bottom: 1px solid #444; border-radius: 15px 15px 0 0 !important; text-align: center; }
-        
-        /* FUERZA COLOR DE TEXTO BLANCO EN TODO EL FORMULARIO */
-        .card-body, label, span, p, .form-check-label { color: #ffffff !important; font-weight: 500; }
-        
-        .btn-qty { width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ffc107; background: transparent; color: #ffc107; font-size: 22px; font-weight: bold; }
-        .btn-help { background: linear-gradient(145deg, #d9534f, #c9302c); color: white; font-weight: bold; border: none; padding: 20px; border-radius: 15px; width: 100%; font-size: 1.4rem; box-shadow: 0 5px 15px rgba(217, 83, 79, 0.4); }
-        .btn-back { background-color: transparent; color: #ffc107; border: 1px solid #ffc107; border-radius: 10px; padding: 10px 20px; font-weight: bold; margin-bottom: 20px; cursor: pointer; }
-        .form-select, .form-control { background-color: #2d2d2d; border: 1px solid #555; color: #ffffff !important; }
-        .hidden { display: none !important; }
-        .badge-qty { font-size: 1.5rem; color: #ffc107 !important; font-weight: bold; padding: 0 15px; }
-        input[type=range] { accent-color: #ffc107; }
-        
-        /* ESTILO PARA SLIDER (LETRAS DE ABAJO) */
-        .slider-labels span { color: #aaaaaa !important; font-size: 0.8rem; }
+        body { background: url('1000058499.png') no-repeat center center fixed; background-size: cover; height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; margin: 0; }
+        .glass { background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1); border-radius: 25px; padding: 40px; width: 100%; max-width: 380px; text-align: center; }
+        .logo h1 { color: #ffc107; font-weight: 800; margin-bottom: 30px; letter-spacing: 2px; }
+        .input-box { position: relative; margin-bottom: 20px; }
+        .input-box span { position: absolute; left: 15px; top: 12px; color: #ffc107; }
+        .input-box input { width: 100%; padding: 12px 12px 12px 45px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; outline: none; }
+        .btn-orange { background: linear-gradient(to right, #ff8c00, #ed5611); border: none; color: white; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; text-transform: uppercase; text-decoration: none; display: block; }
+        .btn-link { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #ddd; padding: 10px; border-radius: 10px; font-size: 0.85rem; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 15px; }
     </style>
 </head>
 <body>
-
-<div class="container py-4">
-    <h1 class="text-center mb-4" style="color: #ffc107; font-weight: 800;">CAILEWEY</h1>
-
-    <div id="section-login" class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card p-4 text-center shadow">
-                <h4 class="mb-4" style="color: #ffc107 !important;">Iniciar Sesión</h4>
-                <input type="text" class="form-control mb-3" placeholder="Usuario">
-                <input type="password" class="form-control mb-3" placeholder="Contraseña">
-                <button class="btn btn-warning w-100 mb-4 fw-bold" onclick="showSection('section-main')">ENTRAR</button>
-                <div class="d-flex justify-content-around">
-                    <a class="text-warning text-decoration-none small" onclick="showSection('section-register')">Crear Cuenta</a>
-                    <a class="text-warning text-decoration-none small" onclick="showSection('section-forgot')">Olvidé Clave</a>
-                </div>
-            </div>
-        </div>
+    <div class="glass">
+        <div class="logo"><h1>CAILEWEY</h1></div>
+        <div class="input-box"><span class="material-symbols-outlined">person</span><input type="text" id="user" placeholder="Usuario"></div>
+        <div class="input-box"><span class="material-symbols-outlined">lock</span><input type="password" id="pass" placeholder="Contraseña"></div>
+        <a href="dashboard.html" class="btn-orange">LOGIN</a>
+        <a href="registro.html" class="btn-link"><span class="material-symbols-outlined" style="font-size: 18px;">person_add</span> Registro nuevo usuario</a>
+        <a href="olvide.html" class="btn-link"><span class="material-symbols-outlined" style="font-size: 18px;">key</span> Olvidé contraseña</a>
     </div>
-
-    <div id="section-register" class="hidden">
-        <button class="btn-back" onclick="showSection('section-login')">← REGRESAR</button>
-        <div class="card p-4">
-            <h3 class="text-center mb-4" style="color: #ffc107 !important;">Registro</h3>
-            <input type="text" class="form-control mb-2" placeholder="Nombre">
-            <input type="tel" class="form-control mb-3" placeholder="Celular">
-            <button class="btn btn-warning w-100 fw-bold" onclick="showSection('section-login')">REGISTRARME</button>
-        </div>
-    </div>
-
-    <div id="section-forgot" class="hidden">
-        <button class="btn-back" onclick="showSection('section-login')">← REGRESAR</button>
-        <div class="card p-4 text-center">
-            <h3 style="color: #ffc107 !important;">Recuperar</h3>
-            <input type="tel" id="forgot-phone" class="form-control mb-4" placeholder="Tu celular">
-            <button class="btn btn-warning w-100 fw-bold" onclick="enviarWA('pass')">PEDIR POR WHATSAPP</button>
-        </div>
-    </div>
-
-    <div id="section-main" class="hidden">
-        <button class="btn btn-outline-warning btn-sm mb-3" onclick="showSection('section-login')">← SALIR</button>
-        
-        <div class="card shadow">
-            <div class="card-header">⛽ GASOLINA</div>
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <span>Litros:</span>
-                <div class="d-flex align-items-center">
-                    <button class="btn-qty" onclick="updateVal('gas', -1)">-</button>
-                    <span id="qty-gas" class="badge-qty">0</span>
-                    <button class="btn-qty" onclick="updateVal('gas', 1)">+</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card shadow">
-            <div class="card-header">🛢️ ACEITE</div>
-            <div class="card-body">
-                <select class="form-select mb-3" id="oil-type">
-                    <option value="4 Tiempos">4 Tiempos</option>
-                    <option value="2 Tiempos">2 Tiempos</option>
-                </select>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span>Litros:</span>
-                    <div class="d-flex align-items-center">
-                        <button class="btn-qty" onclick="updateVal('oil', -1)">-</button>
-                        <span id="qty-oil" class="badge-qty">0</span>
-                        <button class="btn-qty" onclick="updateVal('oil', 1)">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card shadow">
-            <div class="card-header">🔧 EMERGENCIAS</div>
-            <div class="card-body">
-                <div class="form-check form-switch mb-2"><input class="form-check-input" type="checkbox" id="check-patch"><label class="form-check-label ms-2">Parche Ponchadura</label></div>
-                <div class="form-check form-switch mb-2"><input class="form-check-input" type="checkbox" id="check-tire"><label class="form-check-label ms-2">Cambio de Llanta</label></div>
-                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="check-tow"><label class="form-check-label ms-2">Remolque</label></div>
-            </div>
-        </div>
-
-        <div class="card shadow">
-            <div class="card-header">📦 ACCESORIOS</div>
-            <div class="card-body text-center">
-                <input type="range" class="form-range" min="0" max="5" step="1" id="acc-slider" value="0" oninput="updateAcc(this.value)">
-                <div class="d-flex justify-content-between slider-labels"><span>Nada</span><span>Bujía</span><span>Cadena</span><span>Cámara</span><span>Espejo</span><span>Cable</span></div>
-                <div class="mt-3"><span class="badge bg-warning text-dark p-2" id="lbl-acc">Elegido: Ninguno</span></div>
-            </div>
-        </div>
-
-        <button class="btn-help shadow" onclick="enviarSolicitud()">🚀 PEDIR AYUDA AHORA</button>
-    </div>
-</div>
-
-<script>
-    const MI_TEL = "523319053634";
-    // VERIFICA QUE ESTA URL SEA LA DE TU ÚLTIMA IMPLEMENTACIÓN
-    const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxT5-kucWayUcXkl9n99uLBIYcWkjsRl2T9vf-5h3PO0J4PMCeMToOTYgIIcY9csziCPg/exec";
-    
-    let vals = { gas: 0, oil: 0 };
-    const accesorios = ["Ninguno", "Bujía", "Cadena", "Cámara de aire", "Espejo", "Cable"];
-    let accSelected = accesorios[0];
-
-    function showSection(id) {
-        document.getElementById('section-login').classList.add('hidden');
-        document.getElementById('section-register').classList.add('hidden');
-        document.getElementById('section-forgot').classList.add('hidden');
-        document.getElementById('section-main').classList.add('hidden');
-        document.getElementById(id).classList.remove('hidden');
-    }
-
-    function updateVal(type, n) {
-        vals[type] = Math.max(0, Math.min(2, vals[type] + n));
-        document.getElementById(`qty-${type}`).innerText = vals[type];
-    }
-
-    function updateAcc(v) {
-        accSelected = accesorios[v];
-        document.getElementById('lbl-acc').innerText = "Elegido: " + accSelected;
-    }
-
-    function enviarSolicitud() {
-        if (!navigator.geolocation) return alert("GPS no disponible");
-        navigator.geolocation.getCurrentPosition((pos) => {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
-            const linkMaps = `https://www.google.com/maps?q=${lat},${lon}`;
-            
-            const pedido = {
-                gas: vals.gas + " L",
-                aceite: `${vals.oil} L (${document.getElementById('oil-type').value})`,
-                parche: document.getElementById('check-patch').checked ? "SÍ" : "NO",
-                llanta: document.getElementById('check-tire').checked ? "SÍ" : "NO",
-                remolque: document.getElementById('check-tow').checked ? "SÍ" : "NO",
-                accesorio: accSelected,
-                ubicacion: linkMaps
-            };
-
-            // ENVÍO A GOOGLE SHEETS CON AVISO DE ERROR
-            fetch(URL_SCRIPT, { method: "POST", mode: "no-cors", body: JSON.stringify(pedido) })
-            .then(() => console.log("Datos enviados a la hoja"))
-            .catch(err => alert("Error al guardar en Sheets: " + err));
-
-            let msj = `*⚠️ AYUDA CAILEWEY*\n⛽ Gas: ${pedido.gas}\n🛢️ Aceite: ${pedido.aceite}\n🔧 Parche: ${pedido.parche}\n🔘 Llanta: ${pedido.llanta}\n🚜 Remolque: ${pedido.remolque}\n📦 Acc: ${accSelected}\n📍 Ubicación:\n${linkMaps}`;
-            window.open(`https://wa.me/${MI_TEL}?text=${encodeURIComponent(msj)}`, '_blank');
-        }, () => alert("Activa el GPS para pedir ayuda."));
-    }
-
-    function enviarWA(tipo) {
-        const tel = document.getElementById('forgot-phone').value;
-        if(!tel) return alert("Ingresa tu celular");
-        window.open(`https://wa.me/${MI_TEL}?text=Hola, olvidé mi clave. Celular: ${tel}`, '_blank');
-        showSection('section-login');
-    }
-</script>
 </body>
 </html>
