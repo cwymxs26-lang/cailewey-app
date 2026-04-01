@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cailewey - Login</title>
+    <title>Cailewey - Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
@@ -14,31 +14,33 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            margin: 0; 
+            font-family: sans-serif; 
+            margin: 0;
         }
         .glass { 
             background: rgba(0, 0, 0, 0.85); 
             backdrop-filter: blur(10px); 
             border-radius: 25px; 
-            padding: 40px; 
+            padding: 25px; 
             width: 90%; 
-            max-width: 380px; 
-            text-align: center; 
-            border: 1px solid rgba(255,193,7,0.3); 
+            max-width: 400px; 
+            color: white; 
+            border: 1px solid rgba(255,193,7,0.3);
+            overflow-y: auto;
+            max-height: 95vh;
         }
-        .logo h1 { color: #ffc107; font-weight: 900; margin-bottom: 30px; letter-spacing: 2px; }
-        .input-box { position: relative; margin-bottom: 20px; }
+        .text-warning { color: #ffc107 !important; font-weight: bold; }
+        .input-box { position: relative; margin-bottom: 12px; }
         .input-box span { position: absolute; left: 15px; top: 12px; color: #ffc107; }
         .input-box input { 
             width: 100%; 
-            padding: 12px 12px 12px 45px; 
+            padding: 10px 10px 10px 45px; 
             background: rgba(255,255,255,0.1); 
             border: 1px solid rgba(255,255,255,0.2); 
             border-radius: 12px; 
             color: white; 
             outline: none; 
         }
-        /* Botón real, no un enlace */
         .btn-orange { 
             background: linear-gradient(to right, #ff8c00, #ed5611); 
             border: none; 
@@ -49,57 +51,89 @@
             font-weight: bold; 
             cursor: pointer; 
             text-transform: uppercase;
+            margin-top: 10px;
         }
-        .btn-link { color: #ffc107; text-decoration: none; font-size: 0.9rem; display: block; margin-top: 15px; }
+        .small-link { color: #ffc107; text-decoration: none; font-size: 0.85rem; }
     </style>
 </head>
 <body>
     <div class="glass">
-        <div class="logo"><h1>CAILEWEY</h1></div>
+        <h3 class="text-center mb-3 text-warning">CREAR CUENTA</h3>
         
+        <div class="input-box">
+            <span class="material-symbols-outlined">person</span>
+            <input type="text" id="reg-nombre" placeholder="Nombre Completo">
+        </div>
         <div class="input-box">
             <span class="material-symbols-outlined">call</span>
-            <input type="tel" id="login-celular" placeholder="Número de Celular">
+            <input type="tel" id="reg-celular" placeholder="Número de Celular (Usuario)">
         </div>
-        
         <div class="input-box">
             <span class="material-symbols-outlined">lock</span>
-            <input type="password" id="login-pass" placeholder="Contraseña">
+            <input type="password" id="reg-pass" placeholder="Crear Contraseña">
+        </div>
+
+        <hr style="border-color: rgba(255,255,255,0.2)">
+        
+        <div class="input-box">
+            <span class="material-symbols-outlined">motorcycle</span>
+            <input type="text" id="reg-marca" placeholder="Marca de la Moto">
+        </div>
+        <div class="input-box">
+            <span class="material-symbols-outlined">settings_suggest</span>
+            <input type="text" id="reg-modelo" placeholder="Modelo">
+        </div>
+        <div class="input-box">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <input type="number" id="reg-anio" placeholder="Año (Ej: 2024)">
         </div>
         
-        <button type="button" class="btn-orange" onclick="validarLogin()">INGRESAR</button>
+        <button class="btn-orange" onclick="guardarRegistro()">REGISTRARME</button>
         
-        <a href="registro.html" class="btn-link">Crear una cuenta nueva</a>
-        <a href="olvide.html" class="btn-link" style="color: #bbb; font-size: 0.8rem;">Olvidé mi contraseña</a>
+        <div class="text-center mt-3">
+            <a href="index.html" class="small-link">¿Ya tienes cuenta? Ingresa aquí</a>
+        </div>
     </div>
 
     <script>
-        function validarLogin() {
-            const campoCelular = document.getElementById('login-celular').value.trim();
-            const campoPass = document.getElementById('login-pass').value.trim();
+        function guardarRegistro() {
+            // Capturar todos los campos
+            const nombre = document.getElementById('reg-nombre').value.trim();
+            const celular = document.getElementById('reg-celular').value.trim();
+            const pass = document.getElementById('reg-pass').value.trim();
+            const marca = document.getElementById('reg-marca').value.trim();
+            const modelo = document.getElementById('reg-modelo').value.trim();
+            const anio = document.getElementById('reg-anio').value.trim();
 
-            // 1. Verificar si los campos están vacíos
-            if (campoCelular === "" || campoPass === "") {
-                alert("Por favor, ingresa tu celular y contraseña.");
-                return; // Detiene la función aquí mismo
+            // Validación: Que nada esté vacío
+            if(!nombre || !celular || !pass || !marca || !modelo || !anio) {
+                alert("Por favor, completa todos los campos para continuar.");
+                return;
             }
 
-            // 2. Obtener los datos del usuario registrado en este teléfono
-            const datosGuardados = JSON.parse(localStorage.getItem('userCailewey'));
+            // Lógica del ID 2601...
+            let ultimoID = localStorage.getItem('ultimoIDCailewey') || "260100000000000";
+            let nuevoID = (BigInt(ultimoID) + 1n).toString();
 
-            // 3. Validar contra los datos guardados
-            if (datosGuardados) {
-                if (datosGuardados.celular === campoCelular && datosGuardados.password === campoPass) {
-                    // Si todo coincide, entramos
-                    window.location.href = 'dashboard.html';
-                } else {
-                    // Si los datos no coinciden
-                    alert("Celular o contraseña incorrectos. Intenta de nuevo.");
-                }
-            } else {
-                // Si no hay ningún usuario registrado en este teléfono aún
-                alert("No se encontró ninguna cuenta registrada en este dispositivo.");
-            }
+            // Objeto con TODA la información
+            const datosUsuario = {
+                nombre: nombre,
+                celular: celular,
+                password: pass,
+                marca: marca,
+                modelo: modelo,
+                anio: anio,
+                clienteId: nuevoID 
+            };
+
+            // Guardar en la memoria del teléfono
+            localStorage.setItem('userCailewey', JSON.stringify(datosUsuario));
+            localStorage.setItem('ultimoIDCailewey', nuevoID);
+
+            alert("¡Cuenta creada con éxito!\nTu ID de cliente es: " + nuevoID);
+            
+            // Mandarlo al login para que entre con sus nuevos datos
+            window.location.href = 'index.html';
         }
     </script>
 </body>
