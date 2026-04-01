@@ -6,15 +6,13 @@
     <title>Cailewey - Auxilio Vial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Fondo general y color de letra global */
         body { 
             background-color: #121212; 
-            color: #ffffff; /* Texto blanco por defecto */
+            color: #ffffff; 
             font-family: sans-serif; 
             padding-bottom: 50px; 
         }
 
-        /* Tarjetas con bordes más visibles */
         .card { 
             background-color: #1e1e1e; 
             border: 1px solid #444; 
@@ -22,215 +20,79 @@
             margin-bottom: 15px; 
         }
 
-        /* Encabezados de las tarjetas en amarillo */
         .card-header { 
             background-color: #252525; 
             color: #ffc107; 
             font-weight: bold; 
             border-bottom: 1px solid #444; 
             border-radius: 15px 15px 0 0 !important; 
-            font-size: 1.1rem;
+            text-align: center;
         }
 
-        /* Asegurar que el texto dentro de la card sea blanco */
-        .card-body, .form-check-label, .form-label {
-            color: #ffffff !important;
-        }
-
-        /* Estilo de los botones de cantidad */
         .btn-qty { 
-            width: 45px; 
-            height: 45px; 
-            border-radius: 50%; 
-            border: 2px solid #ffc107; 
-            background: transparent; 
-            color: #ffc107; 
-            font-size: 22px; 
-            font-weight: bold;
-            transition: 0.2s; 
+            width: 45px; height: 45px; border-radius: 50%; 
+            border: 2px solid #ffc107; background: transparent; 
+            color: #ffc107; font-size: 22px; font-weight: bold;
         }
-        .btn-qty:active { background: #ffc107; color: black; }
 
-        /* Botón principal de Ayuda */
         .btn-help { 
             background: linear-gradient(145deg, #d9534f, #c9302c); 
-            color: white; 
-            font-weight: bold; 
-            border: none; 
-            padding: 20px; 
-            border-radius: 15px; 
-            width: 100%; 
-            font-size: 1.4rem; 
-            box-shadow: 0 5px 15px rgba(217, 83, 79, 0.4); 
-            text-transform: uppercase;
+            color: white; font-weight: bold; border: none; 
+            padding: 20px; border-radius: 15px; width: 100%; 
+            font-size: 1.4rem; box-shadow: 0 5px 15px rgba(217, 83, 79, 0.4); 
         }
 
-        /* Inputs y Selects */
-        .form-select, .form-control { 
-            background-color: #2d2d2d; 
-            border: 1px solid #555; 
-            color: #ffffff !important; 
-        }
-        .form-select:focus { border-color: #ffc107; box-shadow: none; background-color: #333; color: white; }
-
-        /* Estilo para los textos pequeños debajo del slider */
-        .slider-labels span {
-            color: #bbb;
-            font-size: 0.8rem;
-        }
-
-        .badge-qty { 
-            font-size: 1.5rem; 
-            padding: 0 20px; 
-            min-width: 50px; 
-            text-align: center; 
-            font-weight: bold;
+        .btn-back {
+            background-color: transparent;
             color: #ffc107;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
         }
 
+        .form-select, .form-control { 
+            background-color: #2d2d2d; border: 1px solid #555; color: #ffffff !important; 
+        }
+
+        .hidden { display: none; }
+        .badge-qty { font-size: 1.5rem; color: #ffc107; font-weight: bold; padding: 0 15px; }
         input[type=range] { accent-color: #ffc107; }
-
-        /* Color de los switches (interruptores) */
-        .form-check-input:checked {
-            background-color: #ffc107;
-            border-color: #ffc107;
-        }
     </style>
 </head>
 <body>
 
 <div class="container py-4">
-    <h1 class="text-center mb-4" style="color: #ffc107; font-weight: 800; letter-spacing: 2px;">CAILEWEY</h1>
+    <h1 class="text-center mb-4" style="color: #ffc107; font-weight: 800;">CAILEWEY</h1>
 
-    <div id="section-main">
-        <div class="card shadow">
-            <div class="card-header text-center">⛽ SUMINISTRO DE GASOLINA</div>
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <span class="fw-bold">Cantidad (Litros):</span>
-                <div class="d-flex align-items-center">
-                    <button class="btn-qty" onclick="updateVal('gas', -1)">-</button>
-                    <span id="qty-gas" class="badge-qty">0</span>
-                    <button class="btn-qty" onclick="updateVal('gas', 1)">+</button>
+    <div id="section-login" class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card p-4 text-center">
+                <h4 class="mb-4">Iniciar Sesión</h4>
+                <input type="text" class="form-control mb-3" placeholder="Usuario">
+                <input type="password" class="form-control mb-3" placeholder="Contraseña">
+                <button class="btn btn-warning w-100 mb-3 fw-bold" onclick="showSection('section-main')">ENTRAR</button>
+                <div class="small">
+                    <a href="#" class="text-warning text-decoration-none" onclick="showSection('section-register')">Crear Cuenta</a> | 
+                    <a href="#" class="text-warning text-decoration-none" onclick="showSection('section-forgot')">Olvidé Contraseña</a>
                 </div>
             </div>
-        </div>
-
-        <div class="card shadow">
-            <div class="card-header text-center">🛢️ SUMINISTRO DE ACEITE</div>
-            <div class="card-body">
-                <label class="form-label fw-bold">Tipo de Motor:</label>
-                <select class="form-select mb-4" id="oil-type">
-                    <option value="4 Tiempos">Aceite 4 Tiempos (Moto estándar)</option>
-                    <option value="2 Tiempos">Aceite 2 Tiempos (Motoneta/Scooter)</option>
-                </select>
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="fw-bold">Cantidad (Litros):</span>
-                    <div class="d-flex align-items-center">
-                        <button class="btn-qty" onclick="updateVal('oil', -1)">-</button>
-                        <span id="qty-oil" class="badge-qty">0</span>
-                        <button class="btn-qty" onclick="updateVal('oil', 1)">+</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card shadow">
-            <div class="card-header text-center">🔧 SERVICIOS DE EMERGENCIA</div>
-            <div class="card-body">
-                <div class="form-check form-switch mb-3">
-                    <input class="form-check-input" type="checkbox" id="check-patch" style="height: 25px; width: 50px;">
-                    <label class="form-check-label ms-3 fw-bold">Parche por ponchadura</label>
-                </div>
-                <div class="form-check form-switch mb-3">
-                    <input class="form-check-input" type="checkbox" id="check-tire" style="height: 25px; width: 50px;">
-                    <label class="form-check-label ms-3 fw-bold">Cambio de Llanta</label>
-                </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="check-tow" style="height: 25px; width: 50px;">
-                    <label class="form-check-label ms-3 fw-bold">Servicio de Remolque</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="card shadow">
-            <div class="card-header text-center">📦 ACCESORIOS BÁSICOS</div>
-            <div class="card-body text-center">
-                <label class="form-label d-block mb-3 fw-bold text-start">Desliza para elegir:</label>
-                <input type="range" class="form-range" min="0" max="5" step="1" id="acc-slider" value="0" oninput="updateAcc(this.value)">
-                <div class="d-flex justify-content-between slider-labels px-1">
-                    <span>Nada</span><span>Bujía</span><span>Cadena</span><span>Cámara</span><span>Espejo</span><span>Cable</span>
-                </div>
-                <div class="mt-4"><span class="badge bg-warning text-dark p-2 fs-6" id="lbl-acc">Elegido: Ninguno</span></div>
-            </div>
-        </div>
-
-        <div class="mt-5 text-center">
-            <button class="btn-help" onclick="enviarSolicitud()">🚀 ENVIAR PEDIDO DE AYUDA</button>
-            <p class="mt-3 text-secondary" style="font-size: 0.9rem;">Se enviará ubicación real y reporte al 3319053634</p>
         </div>
     </div>
-</div>
 
-<script>
-    const MI_TEL = "523319053634";
-    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxT5-kucWayUcXkl9n99uLBIYcWkjsRl2T9vf-5h3PO0J4PMCeMToOTYgIIcY9csziCPg/exec";
-    
-    let vals = { gas: 0, oil: 0 };
-    const accesorios = ["Ninguno", "Bujía", "Cadena", "Cámara de aire", "Espejo", "Cable"];
-    let accSelected = accesorios[0];
-
-    function updateVal(type, n) {
-        vals[type] = Math.max(0, Math.min(2, vals[type] + n));
-        document.getElementById(`qty-${type}`).innerText = vals[type];
-    }
-
-    function updateAcc(v) {
-        accSelected = accesorios[v];
-        document.getElementById('lbl-acc').innerText = "Elegido: " + accSelected;
-    }
-
-    function enviarSolicitud() {
-        if (!navigator.geolocation) return alert("GPS no disponible en tu dispositivo.");
-
-        navigator.geolocation.getCurrentPosition((pos) => {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
-            const linkMaps = `https://www.google.com/maps?q=${lat},${lon}`;
-            
-            const pedido = {
-                gas: vals.gas + " L",
-                aceite: `${vals.oil} L (${document.getElementById('oil-type').value})`,
-                parche: document.getElementById('check-patch').checked ? "SÍ" : "NO",
-                llanta: document.getElementById('check-tire').checked ? "SÍ" : "NO",
-                remolque: document.getElementById('check-tow').checked ? "SÍ" : "NO",
-                accesorio: accSelected,
-                ubicacion: linkMaps
-            };
-
-            // 1. Enviar a Google Sheets
-            fetch(URL_APPS_SCRIPT, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(pedido)
-            });
-
-            // 2. Generar mensaje WhatsApp
-            let msj = `*⚠️ SOLICITUD DE AYUDA CAILEWEY*\n\n`;
-            if(vals.gas > 0) msj += `⛽ Gasolina: ${pedido.gas}\n`;
-            if(vals.oil > 0) msj += `🛢️ Aceite: ${pedido.aceite}\n`;
-            if(pedido.parche === "SÍ") msj += `🔧 Parche: SÍ\n`;
-            if(pedido.llanta === "SÍ") msj += `🔘 Llanta: SÍ\n`;
-            if(pedido.remolque === "SÍ") msj += `🚜 Remolque: SÍ\n`;
-            if(accSelected !== "Ninguno") msj += `📦 Accesorio: ${accSelected}\n`;
-            msj += `\n📍 Mi ubicación exacta:\n${linkMaps}`;
-
-            window.open(`https://wa.me/${MI_TEL}?text=${encodeURIComponent(msj)}`, '_blank');
-            alert("¡Pedido enviado con éxito! Revisa tu WhatsApp.");
-
-        }, () => alert("Para enviarte ayuda es obligatorio activar el GPS."));
-    }
-</script>
-
-</body>
-</html>
+    <div id="section-register" class="hidden">
+        <button class="btn-back" onclick="showSection('section-login')">← REGRESAR</button>
+        <div class="card p-4">
+            <h3 class="text-center mb-4 text-warning">Registro Nuevo</h3>
+            <input type="text" class="form-control mb-2" placeholder="Nombre Completo">
+            <input type="tel" class="form-control mb-2" placeholder="Número de Celular">
+            <input type="text" class="form-control mb-2" placeholder="Marca de Moto">
+            <input type="text" class="form-control mb-2" placeholder="Modelo">
+            <input type="number" class="form-control mb-3" placeholder="Año">
+            <button class="btn btn-warning w-100 fw-bold" onclick="showSection('section-login')">REGISTRAR</button>
+        </div>
+    </div>
